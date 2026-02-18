@@ -1,0 +1,343 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-image: url("images/Desktop\ &\ Ipad\ Wallpaper.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* ====== SCREENS ====== */
+.screen {
+    display: none;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.screen.active {
+    display: flex;
+}
+
+/* ====== DEVICE (หน้า create) ====== */
+.tamagotchi-device {
+    background: linear-gradient(135deg, #B09AFF, #FFC2E2, #FF9BB8);
+    width: 400px;
+    max-width: 95vw;
+    border-radius: 40px 40px 50px 50px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.3);
+    border: 5px solid #ffffff;
+}
+
+.device-top {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+/* ====== GREEN SCREEN ====== */
+.screen-display {
+    background: #B8E6B8;
+    border: 6px solid #db427d;
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 280px;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ====== CREATE FORM ====== */
+.name-content {
+    text-align: center;
+    width: 100%;
+}
+.name-content h2 {
+    font-size: 11px;
+    color: #4A4A4A;
+    margin-bottom: 15px;
+}
+.name-content h3 {
+    font-size: 8px;
+    color: #4A4A4A;
+    margin: 12px 0 8px;
+}
+.name-content input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    border: 3px solid #FF9CEE;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+.name-content input[type="text"]:focus {
+    outline: none;
+    border-color: #B09AFF;
+}
+.pokemon-select {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    border: 3px solid #9963b2;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.secondary-btn {
+    width: 100%;
+    padding: 9px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    background: #a27bc1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+.secondary-btn:hover {
+    background: #c5b8e6;
+    transform: translateY(-2px);
+}
+.message {
+    font-size: 7px;
+    margin-top: 8px;
+    padding: 6px;
+    border-radius: 5px;
+    min-height: 20px;
+}
+.message.error {
+    background: #FFCDD2;
+    color: #C62828;
+}
+
+/* ====== LOG ====== */
+.activity-log-display {
+    background: #B8E6B8;
+    border: 6px solid #db427d;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 15px 0;
+    min-height: 70px;
+    max-height: 95px;
+    overflow-y: auto;
+    font-size: 7px;
+    line-height: 1.6;
+    color: #4A4A4A;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+.log-entry {
+    margin-bottom: 4px;
+    padding: 3px 5px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 3px;
+}
+
+/* ====== BUTTONS ====== */
+.button-container {
+    display: grid;
+    gap: 8px;
+}
+.two-btn { grid-template-columns: repeat(2, 1fr); }
+
+.game-btn {
+    padding: 13px 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 3px rgba(255,255,255,0.5);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+.game-btn:hover  { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
+.game-btn:active { transform: translateY(0); }
+
+.btn-left  { background: linear-gradient(135deg, #FF9CEE, #FF6BCB); }
+.btn-right { background: linear-gradient(135deg, #B09AFF, #9370E8); }
+.btn-add   { background: linear-gradient(135deg, #A0E7E5, #7DD3C0); color: #333; text-shadow: none; }
+.btn-nap   { background: linear-gradient(135deg, #FFD93D, #FFC837); color: #333; text-shadow: none; }
+.btn-eat   { background: linear-gradient(135deg, #F48FB1, #EC407A); }
+.btn-play  { background: linear-gradient(135deg, #81C784, #66BB6A); }
+
+/* ====== GAME SCREEN ====== */
+#game-screen {
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+}
+#game-screen.active {
+    display: flex;
+}
+
+.game-wrapper {
+    width: 100%;
+    max-width: 960px;
+}
+
+.game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #B09AFF, #FFC2E2, #FF9BB8);
+    border: 4px solid white;
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.game-header .device-top {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* ====== CARDS AREA: 4 การ์ดอยู่แถวเดียวกัน ====== */
+.pets-area {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 คอลัมน์เท่ากัน */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* ====== การ์ดโปเกมอนแต่ละใบ ====== */
+.pokemon-card {
+    background: linear-gradient(135deg, #B09AFF 0%, #FFC2E2 60%, #FF9BB8 100%);
+    border: 5px solid white;
+    border-radius: 30px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    min-width: 0;  /* ป้องกันการ์ดยืดเกิน grid */
+    animation: cardIn 0.4s ease;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+.pokemon-card.dying {
+    animation: cardOut 0.5s ease forwards;
+}
+
+@keyframes cardOut {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.6) translateY(-20px); }
+}
+
+/* Green screen ภายในการ์ด */
+.card-screen {
+    background: #B8E6B8;
+    border: 4px solid #db427d;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.pokemon-sprite {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    margin-bottom: 6px;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+.pokemon-name {
+    font-size: 9px;
+    color: #4A4A4A;
+    margin-bottom: 3px;
+}
+.pokemon-type {
+    font-size: 6px;
+    color: #888;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+/* Stat bars */
+.stats { width: 100%; }
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+    font-size: 6px;
+}
+.stat-label {
+    min-width: 50px;
+    text-align: left;
+    color: #4A4A4A;
+}
+.bar {
+    flex: 1;
+    height: 9px;
+    background: rgba(255,255,255,0.7);
+    border: 2px solid #8D6E63;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    transition: width 0.5s ease;
+    background-image: repeating-linear-gradient(
+        45deg, transparent, transparent 3px,
+        rgba(255,255,255,0.3) 3px, rgba(255,255,255,0.3) 6px
+    );
+}
+.bar-fill.energy   { background-color: #FFD54F; }
+.bar-fill.fullness { background-color: #F06292; }
+.bar-fill.happy    { background-color: #66BB6A; }
+
+.stat-val {
+    min-width: 20px;
+    text-align: right;
+    font-size: 6px;
+    color: #4A4A4A;
+}
+
+/* ปุ่ม 3 อันใต้การ์ด */
+.card-btns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+.card-btns .game-btn {
+    padding: 9px 4px;
+    font-size: 6px;
+    border-radius: 10px;
+}
+
+/* Log ในหน้าเกม */
+.log-game {
+    max-height: 110px;
+    margin-top: 0;
+}

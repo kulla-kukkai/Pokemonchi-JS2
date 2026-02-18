@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémonchi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- CREATE CHARACTER SCREEN -->
+    <div id="create-screen" class="screen active">
+        <div class="tamagotchi-device">
+            <div class="device-top">Pokémonchi</div>
+            <div class="screen-display">
+                <div class="name-content">
+                    <h2>Create Pokémon</h2>
+                    <input type="text" id="nameInput" placeholder="Enter name...">
+                    <button class="secondary-btn" id="randomNameBtn">🎲 Random name</button>
+                    <p id="formMessage" class="message"></p>
+                    <h3>Choose Pokémon type:</h3>
+                    <select id="typeInput" class="pokemon-select">
+                        <option value="">-- Choose a Pokémon --</option>
+                        <option value="pikachu">Pikachu</option>
+                        <option value="jigglypuff">Jigglypuff</option>
+                        <option value="bulbasaur">Bulbasaur</option>
+                        <option value="meowth">Meowth</option>
+                    </select>
+                </div>
+            </div>
+            <div class="activity-log-display">
+                <div id="create-log">Fill in a name and choose a type...</div>
+            </div>
+            <div class="button-container two-btn">
+                <button class="game-btn btn-left" id="backBtn">◀ BACK</button>
+                <button class="game-btn btn-right" id="createBtn">CREATE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="screen">
+        <div class="game-wrapper">
+            
+            <div class="game-header">
+                <div class="device-top">Pokémonchi</div>
+                <button class="game-btn btn-add" id="addNewBtn">+ New</button>
+            </div>
+
+            <!-- การ์ดโปเกมอนจะถูกเพิ่มตรงนี้โดย JS -->
+            <div id="petsArea" class="pets-area"></div>
+
+            <div class="activity-log-display log-game">
+                <div id="gameLog"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
