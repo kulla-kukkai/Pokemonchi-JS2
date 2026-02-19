@@ -6,7 +6,7 @@ class Pokemon {
         this.energy     = 50;          
         this.fullness   = 50;          
         this.happiness  = 50;          
-        this.countdown  = null;        // เก็บ timer ไว้เพื่อหยุดได้ภายหลัง
+        this.countdown  = null;      
     }
 
     // ---- nap ----
@@ -53,12 +53,12 @@ class Pokemon {
         }
     }
 
-    // ---- ตรวจว่าค่าใดค่าหนึ่งถึง 0 ไหม → ถ้าใช่ หนีไป! ----
+    // när någon av värdena når 0 → släpp pokémonen
     checkIfRunsAway() {
         if (this.energy <= 0 || this.fullness <= 0 || this.happiness <= 0) {
             PokemonCenter.releasePokemon(this);
         } else {
-            // ยังมีชีวิต → อัปเดตการ์ดให้แสดงค่าใหม่
+            // om inte släpper, uppdatera kortet med nya värden
             PokemonCenter.updateCard(this);
         }
     }
