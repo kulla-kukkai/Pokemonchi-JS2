@@ -36,7 +36,7 @@ class Pokemon {
         this.checkIfRunsAway();
     }
 
-    // ---- เริ่ม countdown: ลดค่าทุก 10 วินาที ----
+    // start countdown: minska varje 10 s med 10 poäng
     startCountdown() {
         this.countdown = setInterval(() => {
             this.energy    = Math.max(0, this.energy - 10);
@@ -46,7 +46,7 @@ class Pokemon {
         }, 10000);
     }
 
-    // ---- หยุด countdown ----
+    // stop countdown 
     stopCountdown() {
         if (this.countdown) {
             clearInterval(this.countdown);
@@ -63,12 +63,12 @@ class Pokemon {
         }
     }
 
-    // ---- รูปภาพ ----
+    // Images
     getSprite() {
         return `images/${this.animalType}.png`;
     }
 
-    // ---- ดึงชื่อจาก API ----
+    // Random name from API   
     static async fetchRandomName() {
         const response = await fetch("https://randomuser.me/api/");
         const data     = await response.json();
@@ -77,48 +77,44 @@ class Pokemon {
 }
 
 
-// CLASS: PokemonCenter
-// จัดการรายชื่อโปเกมอน, การ์ด, และ log
-
+// CLASS: PokemonCenter จัดการรายชื่อโปเกมอน, การ์ด, และ log
 
 class PokemonCenter {
 
-    // รายชื่อโปเกมอนทั้งหมดที่มีชีวิตอยู่
-    // static = เป็นของ class ทั้งก้อน ไม่ใช่ของแต่ละตัว
     static pokedex = [];
 
-    // ---- เริ่มเกม ----
+    // skapa sidan
     static init() {
         PokemonCenter.showScreen("create-screen");
     }
 
-    // ---- สลับหน้าจอ ----
+    // switch mellan create och game screen
     static showScreen(screenId) {
         document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
         document.getElementById(screenId).classList.add("active");
     }
 
-    // ---- สร้างโปเกมอนใหม่ ----
+    // new pokemon
     static async createNewPokemon() {
         const nameInput = document.getElementById("nameInput").value.trim();
         const typeInput = document.getElementById("typeInput").value;
         const msgBox    = document.getElementById("formMessage");
 
-        // ตรวจสอบ: เลือกประเภทไหม?
+        // kolla om type är valt
         if (!typeInput) {
             msgBox.textContent = "Please choose a Pokémon type!";
             msgBox.className   = "message error";
             return;
         }
 
-        // ตรวจสอบ: ครบ 4 ตัวแล้วไหม?
+        // kolla om max antal pokémon är nått
         if (PokemonCenter.pokedex.length >= 4) {
             msgBox.textContent = "You can only have 4 Pokémon!";
             msgBox.className   = "message error";
             return;
         }
 
-        // หาชื่อ: ถ้าใส่มาเองใช้นั้น ถ้าไม่มีให้ดึงจาก API
+        // leta efter namn, om inte finns → hämta från API
         let name = nameInput;
         if (!name) {
             try {
@@ -130,28 +126,28 @@ class PokemonCenter {
             }
         }
 
-        // สร้างโปเกมอนตัวใหม่
+        // skapa en ny Pokémon, lägg till i pokedex, starta timer, visa log och skapa kort
         const newPokemon = new Pokemon(name, typeInput);
-        PokemonCenter.pokedex.push(newPokemon);  // เพิ่มเข้า array
-        newPokemon.startCountdown();             // เปิด timer
+        PokemonCenter.pokedex.push(newPokemon);  
+        newPokemon.startCountdown();             
 
         PokemonCenter.addLog(`${name} was created! 🎉`);
-        PokemonCenter.addCard(newPokemon);       // สร้างการ์ดบนหน้าเกม
+        PokemonCenter.addCard(newPokemon);      
         PokemonCenter.showScreen("game-screen");
 
-        // ล้างฟอร์ม
+        // reset form
         document.getElementById("nameInput").value = "";
         document.getElementById("typeInput").value = "";
         msgBox.textContent = "";
     }
 
-    // ---- สร้างการ์ด HTML สำหรับโปเกมอนตัวหนึ่ง ----
+    // skapa kort för en Pokémon
     static addCard(pokemon) {
         const petsArea = document.getElementById("petsArea");
 
         const card = document.createElement("div");
         card.classList.add("pokemon-card");
-        card.id = `card-${pokemon.name}`;  // id ไม่ซ้ำกัน เพื่อหาการ์ดทีหลัง
+        card.id = `card-${pokemon.name}`;  
 
         card.innerHTML = `
             <div class="card-screen">
@@ -191,7 +187,7 @@ class PokemonCenter {
             </div>
         `;
 
-        // ผูกปุ่มกับ method ของโปเกมอนตัวนั้น
+        // sätt event listeners för knapparna
         const btns = card.querySelectorAll(".card-btns .game-btn");
         btns[0].addEventListener("click", () => pokemon.nap());
         btns[1].addEventListener("click", () => pokemon.eat());
@@ -200,7 +196,7 @@ class PokemonCenter {
         petsArea.appendChild(card);
     }
 
-    // ---- อัปเดตตัวเลขและ bar บนการ์ด ----
+    // update kortet med nya värden
     static updateCard(pokemon) {
         document.getElementById(`bar-energy-${pokemon.name}`).style.width    = `${pokemon.energy}%`;
         document.getElementById(`val-energy-${pokemon.name}`).textContent    = pokemon.energy;
@@ -212,22 +208,21 @@ class PokemonCenter {
         document.getElementById(`val-happy-${pokemon.name}`).textContent     = pokemon.happiness;
     }
 
-    // ---- ปล่อยโปเกมอนที่ไม่ได้รับการดูแล (ค่าถึง 0) ----
     static releasePokemon(pokemon) {
         pokemon.stopCountdown();
         PokemonCenter.addLog(`${pokemon.name} ran away! 💔`);
 
-        // ลบออกจาก array
+        // filtrera den pokemonen bort från pokedex
         PokemonCenter.pokedex = PokemonCenter.pokedex.filter(p => p !== pokemon);
 
-        // ลบการ์ดออกจากหน้าจอ พร้อม animation
+        // radera kortet 
         const card = document.getElementById(`card-${pokemon.name}`);
         if (card) {
             card.classList.add("dying");
             setTimeout(() => {
                 card.remove();
 
-                // ถ้าไม่มีโปเกมอนเหลือเลย → กลับหน้า create พร้อมข้อความ
+                // 0 pokémon kvar → visa create screen
                 if (PokemonCenter.pokedex.length === 0) {
                     document.getElementById("create-log").textContent = "All Pokémon ran away... Create a new one! 🥺";
                     PokemonCenter.showScreen("create-screen");
@@ -236,7 +231,7 @@ class PokemonCenter {
         }
     }
 
-    // ---- เพิ่มข้อความลง log ----
+    // activitet log med tidsstämpel
     static addLog(message) {
         const log = document.getElementById("gameLog");
         if (!log) return;
@@ -250,9 +245,8 @@ class PokemonCenter {
         entry.className   = "log-entry";
         entry.textContent = `[${time}] ${message}`;
 
-        log.prepend(entry);  // ใหม่อยู่บนสุด
+        log.prepend(entry);  
 
-        // เก็บไว้แค่ 20 รายการล่าสุด
         while (log.children.length > 20) {
             log.removeChild(log.lastChild);
         }
@@ -261,25 +255,25 @@ class PokemonCenter {
 
 
 
-// ผูก Event ทั้งหมดเมื่อหน้าเว็บโหลดเสร็จ
+// när sidan laddas 
 
 document.addEventListener("DOMContentLoaded", () => {
 
     PokemonCenter.init();
 
-    // ปุ่ม BACK
+    // btn BACK
     document.getElementById("backBtn").addEventListener("click", () => {
         if (PokemonCenter.pokedex.length > 0) {
             PokemonCenter.showScreen("game-screen");
         }
     });
 
-    // ปุ่ม CREATE
+    // btn CREATE
     document.getElementById("createBtn").addEventListener("click", () => {
         PokemonCenter.createNewPokemon();
     });
 
-    // ปุ่ม Random Name
+    // btn Random Name
     document.getElementById("randomNameBtn").addEventListener("click", async () => {
         try {
             const name = await Pokemon.fetchRandomName();
@@ -290,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ปุ่ม + New Pokémon
+    // btn New Pokémon
     document.getElementById("addNewBtn").addEventListener("click", () => {
         PokemonCenter.showScreen("create-screen");
     });
