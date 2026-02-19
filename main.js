@@ -77,7 +77,7 @@ class Pokemon {
 }
 
 
-// CLASS: PokemonCenter จัดการรายชื่อโปเกมอน, การ์ด, และ log
+// CLASS: PokemonCenter 
 
 class PokemonCenter {
 
